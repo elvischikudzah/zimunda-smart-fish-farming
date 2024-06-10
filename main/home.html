@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,6 +17,12 @@
     />
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/home.css" />
+    <link rel="stylesheet" href="styles/weatherModal.css">
+    <link rel="stylesheet" href="styles/pondview.css" />
+    <link rel="stylesheet" href="styles/notifications.css" />
+    <link rel="stylesheet" href="styles/account.css" />
+    <link rel="stylesheet" href="./styles/waterLevel.css">
+    <link rel="stylesheet" href="./styles/pumpSwitch.css">
     <link rel="icon" href="zimunda-icon.png" type="icon" />
   </head>
   <body>
@@ -57,7 +64,6 @@
           <ul class="nav-date">
             <li><a href="#about" class="currentDate"></a></li>
           </ul>
-
           <ul class="account">
             <li>
               <i
@@ -66,11 +72,44 @@
               ></i>
             </li>
             <li>
-              <i class="fas fa-cog icon-style" id="user-dropdown-toggle"></i>
+              <i
+                class="fas fa-bell icon-style notification-icon"
+                id="light-dark-toggle"
+                onclick="document.getElementById('id01').style.display='block'"
+              ></i>
+              <!-- The Notifications Modal -->
+              <div id="id01" class="modal">
+                <span
+                  onclick="document.getElementById('id01').style.display='none'"
+                  class="bi bi-x-square-fill close"
+                  title="Close Modal"
+                  ></span
+                >
+
+                <!-- Modal Content -->
+                <div class="notifications">
+                  <h3 class="fas fa-bell">Notifications:</h3>
+                  <div id="notification-messages"></div>
+                </div>
+              </div>
             </li>
             <li>
-              <i class="fas fa-user icon-style" id="user-dropdown-toggle"></i>
+              <i class="fas fa-cog icon-style" id="user-dropdown-toggle" onclick="featureDev()"></i>
             </li>
+            <li>
+              <i
+                class="fas fa-user icon-style"
+                id="user-dropdown-toggle"
+                onclick="document.querySelector('.user-dropdown-modal').style.display='flex'"
+              ></i>
+            </li>
+            <!-- User Dropdown Modal -->
+            <div class="user-dropdown-modal">
+              <div class="logout-container">
+                <p>Account</p>
+                <button class="logout">Logout</button>
+              </div>
+            </div>
           </ul>
         </ul>
       </nav>
@@ -86,8 +125,38 @@
         </p>
       </div>
       <div class="contents">
-        <div class="content-block" href="dashboard.html">
-          <a class="social-links" href="dashboard.html" target="_blank">
+        <div class="content-block weather-container" onclick="openModal()">
+            <div class="current-weather">
+                <div class="temperature">
+                  <i class="bi bi-sun-fill"></i>
+                    <span class="temp"></span>
+                </div>
+                <div class="details">
+                    <div class="humidity"></div>
+                    <div class="wind"></div>
+                    <div class="rain-probability"></div>
+                </div>
+            </div>
+            <div class="forecast">
+                <div class="day">
+                    <span class="day-name">SAT</span>
+                    <span class="day-temp"></span>
+                    <i class="bi bi-cloud-rain-fill"></i>
+                </div>
+                <div class="day">
+                    <span class="day-name">SUN</span>
+                    <span class="day-temp"></span>
+                    <i class="bi bi-cloud-fill"></i>
+                </div>
+                <div class="day">
+                    <span class="day-name">MON</span>
+                    <span class="day-temp"></span>
+                    <i class="bi bi-cloud-sun-fill"></i>
+                </div>
+            </div>
+        </div>
+        <div class="content-block">
+          <a class="social-links" href="dashboard.html">
             <img
               class="socials"
               src="images/aquarium.png"
@@ -99,26 +168,13 @@
           </a>
           Manage Your Pond with Confidence.
         </div>
-        <div class="content-block coffeeDev">
-          <a class="social-links coffeeDev" href="" target="_blank">
-            <img
-              class="socials coffeeDev"
-              src="images/coffee1.png"
-              alt="Gmail"
-              width="30px"
-              height="auto"
-            />Coffee Farming
-            <br />
-          </a>
-          Manage Your Coffee Farm for Success.
-        </div>
         <div class="content-block">
-          <a class="messages" href="" target="_blank">
-            New Messages <span class="span1">5</span>
+          <a class="messages" onclick="changePhoneNumber()">
+            Messages Prefences
             <br />
           </a>
-          <a class="notifications" href="" target="_blank">
-            New Notifications <span class="span2">3</span>
+          <a class="notifications1" onclick="document.getElementById('id01').style.display='block'" href="">
+            New Notifications <span class="span2">0</span>
           </a>
         </div>
       </div>
@@ -127,9 +183,62 @@
       </div>
     </div>
     <!--====== End of Home ======-->
+    <!-- ======== Weather Overview Modal-->
+    <div class="weather-modal">
+      <h1 class="weather-overview">
+        Real-time Weather Overview
+        <span class="bi bi-x-square-fill close-modal" onclick="closeModal()"></span>
+      </h1>
+      <div class="modal-container">
+        <div class="weather-input">
+          <h3>Enter a City Name</h3>
+          <input
+            class="city-input"
+            type="text"
+            placeholder="E.g., New York, London, Tokyo"
+          />
+          <button class="search-btn">Search</button>
+          <div class="separator"></div>
+          <button class="location-btn">Use Current Location</button>
+        </div>
+        <div class="weather-data">
+          <div class="days-forecast">
+            <h2>5-Day Forecast <span class="bi bi-geo-alt-fill mutare">Mutare</span></h2>
+            <ul class="weather-cards">
+              <li class="card">
+                <h3>( ______ )</h3>
+                <h6>Temp: __C</h6>
+                <h6>Wind: __ M/S</h6>
+                <h6>Humidity: __%</h6>
+              </li>
+              <li class="card">
+                <h3>( ______ )</h3>
+                <h6>Temp: __C</h6>
+                <h6>Wind: __ M/S</h6>
+                <h6>Humidity: __%</h6>
+              </li>
+              <li class="card">
+                <h3>( ______ )</h3>
+                <h6>Temp: __C</h6>
+                <h6>Wind: __ M/S</h6>
+                <h6>Humidity: __%</h6>
+              </li>
+              <li class="card">
+                <h3>( ______ )</h3>
+                <h6>Temp: __C</h6>
+                <h6>Wind: __ M/S</h6>
+                <h6>Humidity: __%</h6>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <script src="./scripts/weatherContainer.js"></script>
+    <script src="./scripts/weatherModal.js"></script>
     <script src="./scripts/script.js"></script>
-    <script type="text/javascript" src="./scripts/userLogin.js"></script>
+    <script type="module" src="./scripts/userLogin.js"></script>
     <noscript>Please enable Javascript to view this page!</noscript>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -140,6 +249,10 @@
       $(".coffeeDev").click(function () {
         Swal.fire("⚠️Feature still in Development⚒️");
       });
+      function showError() {
+        Swal.fire("Error fetching weather data!\n🛸");
+      };
+
     </script>
   </body>
 </html>

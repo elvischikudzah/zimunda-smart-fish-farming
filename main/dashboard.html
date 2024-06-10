@@ -13,12 +13,15 @@
       href="https://fonts.googleapis.com/css2?family=Nova+Round&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles/dashboard.css" />
     <link rel="stylesheet" href="styles/home.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/pondview.css" />
     <link rel="stylesheet" href="styles/notifications.css" />
     <link rel="stylesheet" href="styles/account.css" />
+    <link rel="stylesheet" href="./styles/waterLevel.css">
+    <link rel="stylesheet" href="./styles/pumpSwitch.css">
     <link rel="icon" href="zimunda-icon.png" type="icon" />
     <title>Dashboard</title>
   </head>
@@ -64,7 +67,7 @@
           <ul class="account">
             <li>
               <i
-                class="fas fa-bell icon-style"
+                class="fas fa-bell icon-style notification-icon"
                 id="light-dark-toggle"
                 onclick="document.getElementById('id01').style.display='block'"
               ></i>
@@ -72,22 +75,20 @@
               <div id="id01" class="modal">
                 <span
                   onclick="document.getElementById('id01').style.display='none'"
-                  class="close"
+                  class="bi bi-x-square-fill close"
                   title="Close Modal"
-                  >&times;</span
+                  ></span
                 >
 
                 <!-- Modal Content -->
                 <div class="notifications">
                   <h3 class="fas fa-bell">Notifications:</h3>
-                  <p>Notification 1 <button>Clear</button></p>
-                  <p>Notification 2 <button>Clear</button></p>
-                  <p>Notification 3 <button>Clear</button></p>
+                  <div id="notification-messages"></div>
                 </div>
               </div>
             </li>
             <li>
-              <i class="fas fa-cog icon-style" id="user-dropdown-toggle"></i>
+              <i class="fas fa-cog icon-style" id="user-dropdown-toggle" onclick="featureDev()"></i>
             </li>
             <li>
               <i
@@ -116,7 +117,7 @@
         <p>Threshold: 18°C - 25°C</p>
         <div>
           <iframe
-            src="http://localhost:3000/d-solo/adjkshybrrshsc/temperature-dashboard?orgId=1&from=1713184050000&to=1713202977000&theme=dark&panelId=1"
+            src="http://localhost:3000/d-solo/ddnrjdcgo2i2oc/new-dashboard?orgId=1&from=1717500574670&to=1717504268441&panelId=5"
             frameborder="0"
             class="timeseries-graph"
           ></iframe>
@@ -127,26 +128,26 @@
         <div class="center">
           <div class="state">
             <h2 class="card-heading">System State:</h2>
-            <span>🟢Running</span>
+            <span id="systemState">checking...</span>
           </div>
           <div class="uptime">
             <h2 class="card-heading">Uptime:</h2>
-            <span>21 mins</span>
+            <span id="uptime">--/--/--</span>
           </div>
         </div>
 
         <div class="current">
           <iframe
-            src="http://localhost:3000/d-solo/adjkshybrrshsc/temperature-dashboard?orgId=1&from=1713184050000&to=1713202977000&panelId=2"
+            src="http://localhost:3000/d-solo/ddnrjdcgo2i2oc/new-dashboard?orgId=1&from=1717487069902&to=1717508669902&panelId=2"
             frameborder="0"
             class="current-temp"
           ></iframe>
           <iframe
-            src="http://localhost:3000/d-solo/adjkshybrrshsc/temperature-dashboard?orgId=1&from=1713184050000&to=1713202977000&panelId=2"
+            src="http://localhost:3000/d-solo/ddnrjdcgo2i2oc/new-dashboard?orgId=1&from=1717487239251&to=1717508839251&panelId=3"
             frameborder="0"
             class="current-temp"
           ></iframe>
-          <div class="last-update">Last Updated: 2024-04-15 14:27:43</div>
+          <div class="last-update">Last Updated: <span id="lastUpdate">The system is down!</span></div>
           <ul class="test">
             <img class="logo" src="zimunda-icon.png" alt="" />
             <li>
@@ -161,23 +162,39 @@
         <p>Threshold: 6.5 - 9.0</p>
         <div class="timeseries-graph">
           <iframe
-            src="http://localhost:3000/d-solo/adjkshybrrshsc/temperature-dashboard?orgId=1&from=1713184050000&to=1713202977000&theme=dark&panelId=1"
-            class="timeseries-graph"
+            src="http://localhost:3000/d-solo/ddnrjdcgo2i2oc/new-dashboard?orgId=1&from=1717500574670&to=1717504268441&panelId=5"
             frameborder="0"
+            class="timeseries-graph"
           ></iframe>
         </div>
       </div>
 
+      
+      <!--========= Water Level View =========-->
+      <div class="water-level">
+        <h2 class="card-heading">Water Level</h2>
+        <section>
+          <p class="waterLevelStatus">Checking...</p>
+          <div class="waterContainer"></div>
+        </section>
+      </div>
+      <!--========= End of Tbale View =========-->
       <!--========= Pond View Images =========-->
       <div class="slider">
         <div class="slide active">
-          <img src="./image.jpg" alt="" />
+          <img src="./images/pond (1).png" alt="pond-view image" />
         </div>
         <div class="slide">
-          <img src="./images/banner.png" alt="" />
+          <img src="./images/pond (2).png" alt="pond-view image" />
         </div>
         <div class="slide">
-          <img src="./images/banner.jpg" alt="" />
+          <img src="./images/pond (3).png" alt="pond-view image" />
+        </div>
+        <div class="slide">
+          <img src="./images/pond (4).png" alt="pond-view image" />
+        </div>
+        <div class="slide">
+          <img src="./images/pond (5).png" alt="pond-view image" />
         </div>
         <div class="navigation">
           <i class="fas fa-chevron-left prev-btn"></i>
@@ -186,25 +203,30 @@
       </div>
       <!--========= End of Pond View =========-->
 
-      <!--========= Table View =========-->
-      <iframe
-        src="http://localhost:3000/d-solo/adjkshybrrshsc/temperature-dashboard?orgId=1&from=1713184050000&to=1713202977000&panelId=3"
-        width="350"
-        height="200"
-        frameborder="0"
-        class="table-view"
-      ></iframe>
-      <!--========= End of Tbale View =========-->
-
-      <!--========= Recommendations =========-->
+      <!-- ========= Pumps =========-->
       <div class="recommendations">
-        <h2 class="card-heading">Recommendations:</h2>
-        <p>recommendation 1</p>
-        <p>recommendation 2</p>
-        <p>recommendation 3</p>
-        <p>recommendation 4</p>
-      </div>
-      <!--========= End of Recommendations =========-->
+        <h2 class="card-heading">Pumps</h2>
+        <div class="pumps">
+          <div class="pump1">
+            <p>Pump 1 (Inlet) <span class="pump-switch1">
+              <p>Status: <span id="pump1-status">checking...</span></p>
+              <div class="switch-container">
+                <input type="checkbox" id="pump1-switch" />
+              </div>
+            </span></p>
+          </div>
+          <div class="pump2">
+            <p>Pump 2 (Outlet) <span class="pump-switch2">
+              <p>Status: <span id="pump2-status">checking...</span></p>
+              <div class="switch-container">
+                <input type="checkbox" id="pump2-switch" />
+              </div>
+            </span></p>
+          </div>
+        </div>
+</div>
+<!--========= End of Pumps =========-->
+
 
       <hr class="bottom-line" />
 
@@ -214,6 +236,9 @@
     </div>
     <!--====== End of Main ======-->
 
+    <script src="./scripts/waterLevel.js"></script>
+    <script src="./scripts/getData.js"></script>
+    <script src="./scripts/sensorData.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/script.js"></script>
     <script src="./scripts/pondview.js"></script>

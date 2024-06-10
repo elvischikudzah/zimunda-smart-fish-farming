@@ -99,12 +99,17 @@
     </header>
     <!--========= End of Header =========-->
     <p class="detailed">
-      Detailed report for the whole System, Sensors, Readings and the Errors.
+      Detailed report for the whole System, Sensors, Pumps and Readings.
     </p>
     <!--========= Main =========-->
     <div class="repoemain">
-        <button class="add-sensor generateReport">Generate Report</button>
-    </div>
+  <button class="add-sensor generateReport">Generate Report</button>
+  <div class="loader-container">
+    <div class="circle-loader"></div>
+    <p class="loader-text">generating...</p>
+  </div>
+</div>
+
 
     <!--====== End of Main ======-->
     <hr class="bottom-line" />
@@ -112,16 +117,28 @@
       <p>©️ 2024 Zimunda Estate. All rights reserved.</p>
     </div>
 
+    <script type="module" src="./scripts/writeReport.js"></script>
+    <script type="module" src="./scripts/sendEmailReport.js" defer></script>
     <script src="./scripts/script.js"></script>
     <script src="./scripts/sensorData.js"></script>
     <script src="./scripts/notifications.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+      
+    </script>
     <script>
-      // Alert for add sensor button
-      $(".add-sensor").click(function () {
-        Swal.fire("⚠️Feature still in Development⚒️");
+      
+      const generateReport = document.querySelector(".add-sensor");
+      const loader = document.querySelector(".loader-container");
+
+      generateReport.addEventListener("click", function () {
+        loader.style.display = "block";
       });
+    
+    
     </script>
   </body>
 </html>

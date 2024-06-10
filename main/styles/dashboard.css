@@ -16,10 +16,10 @@
 .ph-container,
 .state,
 .uptime {
-  color: #2c3e50;
+  color: #304458;
   font-size: 15px;
   line-height: 10px;
-  background-color: #111827;
+  background-color: #181b1f;
   width: 380px;
   height: 350px;
   padding-left: 5px;
@@ -37,6 +37,9 @@
 .timeseries-graph {
   width: 370px;
   height: 265px;
+}
+iframe {
+  border-radius: 5px;
 }
 .current-temp,
 .table-view {
@@ -67,7 +70,7 @@
 .uptime {
   padding: 10px;
   width: 150px;
-  height: 90px;
+  height: 70px;
   text-align: center;
   margin: 5px;
   margin-top: 0;
@@ -96,13 +99,21 @@
   justify-content: space-evenly;
 }
 .recommendations {
-  background-color: #111827;
-  width: 350px;
+  background-color: #181b1f;
+  width: 368px;
   border-radius: 7px;
   overflow-y: auto;
   padding: 5px;
   margin-top: -4px;
   margin-bottom: 9px;
+  color: #9ec8f1;
+}
+.pumps {
+  display: flex;
+}
+.pump1,
+.pump2 {
+  flex: 1;
 }
 .top-line {
   margin: 0 auto;
@@ -127,7 +138,4 @@
   margin: 0 auto;
   color: white;
   margin-top: -90px;
-}
-.user-dropdown-modal {
-
 }
